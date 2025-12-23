@@ -1,0 +1,38 @@
+services:
+  # 백엔드 API 서버
+  - type: web
+    name: order-app-backend
+    env: node
+    plan: free
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        sync: false
+      - key: DB_NAME
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+
+  # 프론트엔드 (Static Site)
+  - type: web
+    name: order-app-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false
+
+databases:
+  - name: order-app-db
+    plan: free
+    databaseName: order_app
+    user: order_app_user
+
