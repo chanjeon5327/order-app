@@ -108,9 +108,24 @@ function App() {
         )
       )
     } else {
-      // 새 항목 추가
-      setCartItems(prev => [...prev, { ...item, quantity: 1 }])
+      // 새 항목 추가 (고유 ID 생성)
+      const cartItemId = `cart_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+      setCartItems(prev => [...prev, { ...item, quantity: 1, cartItemId }])
     }
+  }
+
+  const handleRemoveFromCart = (cartItemId) => {
+    setCartItems(prev => prev.filter(item => item.cartItemId !== cartItemId))
+  }
+
+  const handleUpdateCartQuantity = (cartItemId, change) => {
+    setCartItems(prev => prev.map(item => {
+      if (item.cartItemId === cartItemId) {
+        const newQuantity = Math.max(1, item.quantity + change)
+        return { ...item, quantity: newQuantity }
+      }
+      return item
+    }))
   }
 
   const handleOrder = () => {
@@ -126,18 +141,21 @@ function App() {
 
     // 각 장바구니 아이템을 개별 주문으로 추가
     const newOrders = cartItems.map((item, index) => {
-      const optionPrice = item.selectedOptions.reduce((optSum, opt) => optSum + opt.price, 0)
+      const optionPrice = (item.selectedOptions || []).reduce((optSum, opt) => optSum + opt.price, 0)
       const itemPrice = (item.basePrice + optionPrice) * item.quantity
       
+      // 고유한 주문 ID 생성
+      const orderId = `order_${Date.now()}_${index}_${Math.random().toString(36).substr(2, 9)}`
+      
       return {
-        id: Date.now() + index,
+        id: orderId,
         orderDate: new Date().toISOString(),
         menuId: item.menuId,
         menuName: item.menuName,
         quantity: item.quantity,
         totalPrice: itemPrice,
         optionsText: item.optionsText || '',
-        selectedOptions: item.selectedOptions,
+        selectedOptions: item.selectedOptions || [],
         status: 'received' // 주문 접수 상태로 시작
       }
     })
@@ -185,6 +203,8 @@ function App() {
             <ShoppingCart 
               cartItems={cartItems} 
               onOrder={handleOrder}
+              onRemoveItem={handleRemoveFromCart}
+              onUpdateQuantity={handleUpdateCartQuantity}
             />
           </section>
         </main>

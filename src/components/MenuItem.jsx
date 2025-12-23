@@ -15,14 +15,14 @@ function MenuItem({ menu, onAddToCart }) {
   }
 
   const handleAddToCart = () => {
-    const selectedOptionDetails = menu.options.filter(opt => 
+    const selectedOptionDetails = (menu.options || []).filter(opt => 
       selectedOptions.includes(opt.id)
     )
     onAddToCart({
       menuId: menu.id,
       menuName: menu.name,
       basePrice: menu.price,
-      selectedOptions: selectedOptionDetails,
+      selectedOptions: selectedOptionDetails || [],
       optionsText: selectedOptionDetails.map(opt => opt.name).join(', ')
     })
     
