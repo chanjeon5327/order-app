@@ -58,3 +58,7 @@
   }
 }
 
+.admin-main {
+  flex-direction: column;
+}
+
