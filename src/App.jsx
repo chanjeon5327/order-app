@@ -14,7 +14,7 @@ const menuData = [
     name: '아메리카노(ICE)',
     price: 4000,
     description: '간단한 설명...',
-    image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=300&fit=crop',
+    image: '/patrick-tomasso-fMntI8HAAB8-unsplash.jpg',
     options: [
       { id: 'shot', name: '샷 추가', price: 500 },
       { id: 'syrup', name: '시럽 추가', price: 0 }
@@ -25,7 +25,7 @@ const menuData = [
     name: '아메리카노(HOT)',
     price: 4000,
     description: '간단한 설명...',
-    image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&h=300&fit=crop',
+    image: '/blake-wisz-Kx3o6_m1Yv8-unsplash.jpg',
     options: [
       { id: 'shot', name: '샷 추가', price: 500 },
       { id: 'syrup', name: '시럽 추가', price: 0 }
@@ -36,7 +36,7 @@ const menuData = [
     name: '카페라떼',
     price: 5000,
     description: '간단한 설명...',
-    image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&h=300&fit=crop',
+    image: '/blake-wisz-Kx3o6_m1Yv8-unsplash.jpg',
     options: [
       { id: 'shot', name: '샷 추가', price: 500 },
       { id: 'syrup', name: '시럽 추가', price: 0 }
@@ -184,7 +184,7 @@ function App() {
   }
 
   if (currentPage === 'order') {
-    return (
+  return (
       <div className="App">
         <Header currentPage={currentPage} onNavigate={handleNavigate} />
         <main className="main-content">
@@ -228,7 +228,7 @@ function App() {
           />
         </main>
       </div>
-    )
+  )
   }
 
   return null
